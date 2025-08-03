@@ -82,10 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryItem.classList.add('category-item');
         categoryItem.setAttribute('role','button');
         categoryItem.setAttribute('tabindex','0');
-        const businessCount = getBusinessCountForCategory(category.id);
         categoryItem.innerHTML = `
             <i class="${category.icon}"></i>
-            <span>${category.name} <span class="category-counter">(${businessCount})</span></span>
+            <span>${category.name}</span>
         `;
 
         categoryItem.addEventListener('click', () => {
@@ -103,10 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function createAllCategoriesItem() {
         const allCategoriesItem = document.createElement('div');
         allCategoriesItem.classList.add('category-item');
-        const totalBusinesses = businessData ? businessData.businesses.length : 0;
         allCategoriesItem.innerHTML = `
             <i class="fas fa-th-large"></i>
-            <span>सर्व श्रेण्या <span class="category-counter">(${totalBusinesses})</span></span>
+            <span>सर्व श्रेण्या</span>
         `;
 
         allCategoriesItem.addEventListener('click', () => {
@@ -143,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        selectedCategoryName.textContent = category.name;
+        const businessCount = getBusinessCountForCategory(category.id);
+        selectedCategoryName.innerHTML = `${category.name} <span class="category-counter">(${businessCount})</span>`;
         selectedCategoryName.style.opacity = '1';
 
         filterBusinesses();

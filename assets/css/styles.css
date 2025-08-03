@@ -264,20 +264,8 @@ header::after {
     margin: 0 0 8px;
     line-height: 1.6;
     height: 1.6em;
-    padding: 2px 60px 2px 0; /* Increased padding for wider gradient */
     font-size: 1.3rem; /* Increased font size */
     font-weight: 600;
-}
-
-.business-card h4::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 60px; /* Wider gradient for more gradual fade */
-    background: linear-gradient(to right, transparent, var(--card-background));
-    pointer-events: none;
 }
 
 .business-card p {

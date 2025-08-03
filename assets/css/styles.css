@@ -196,6 +196,13 @@ header::after {
     color: var(--text-color);
 }
 
+.category-counter {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    font-weight: 400;
+    margin-left: 5px;
+}
+
 .business-grid {
     display: grid;
     grid-template-columns: 1fr;

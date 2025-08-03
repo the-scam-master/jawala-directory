@@ -3,29 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const categoryGrid = document.getElementById('categoryGrid');
     const selectedCategoryName = document.getElementById('selectedCategoryName');
-    const sortSelect = document.getElementById('sortSelect');
     let businessData = null;
     let selectedCategory = null;
     const loadingOverlay = document.getElementById('loadingOverlay');
 
     businessList.setAttribute('aria-live', 'polite');
-
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsModal = document.getElementById('settingsModal');
-    const closeModal = document.getElementById('closeModal');
-    const darkToggle = document.getElementById('darkToggle');
-
-    if (settingsBtn) settingsBtn.addEventListener('click', () => settingsModal.classList.add('show'));
-    if (closeModal) closeModal.addEventListener('click', () => settingsModal.classList.remove('show'));
-
-    if (localStorage.getItem('dark') === 'true') {
-        document.documentElement.classList.add('dark');
-        if (darkToggle) darkToggle.checked = true;
-    }
-    if (darkToggle) darkToggle.addEventListener('change', () => {
-        document.documentElement.classList.toggle('dark', darkToggle.checked);
-        localStorage.setItem('dark', darkToggle.checked);
-    });
 
     async function fetchBusinessData() {
         loadingOverlay.classList.add('active');
@@ -286,20 +268,5 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         deferredPrompt = e;
         banner.classList.add('show');
-    });
-
-    document.addEventListener('keydown', event => {
-        const blockedKeys = ['c', 'x', 'v', 'a', 's', 'u', 'p'];
-        if ((event.ctrlKey || event.metaKey) && blockedKeys.includes(event.key.toLowerCase())) {
-            event.preventDefault();
-        }
-    });
-
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    document.addEventListener('touchstart', event => {
-        if (event.touches.length > 1) {
-            event.preventDefault();
-        }
     });
 });

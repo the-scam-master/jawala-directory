@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const businessCount = getBusinessCountForCategory(category.id);
-        selectedCategoryName.innerHTML = `${category.name} <span class="category-counter">(${businessCount})</span>`;
+        selectedCategoryName.innerHTML = `<span class="category-name">${category.name}</span> <span class="category-counter">(${businessCount})</span>`;
         selectedCategoryName.style.opacity = '1';
 
         filterBusinesses();
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allCategoriesItem.classList.add('selected');
         selectedCategory = null;
         document.querySelectorAll('.category-item').forEach(item => item.classList.remove('hidden'));
-        selectedCategoryName.textContent = '';
+        selectedCategoryName.innerHTML = '';
         selectedCategoryName.style.opacity = '0';
         filterBusinesses();
         history.pushState({}, '', location.pathname);

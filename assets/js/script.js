@@ -60,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function getBusinessCountForCategory(categoryId) {
+        return businessData.businesses.filter(business => business.category === categoryId).length;
+    }
+
     function renderCategoryGrid(categories) {
         categoryGrid.innerHTML = '';
 
@@ -78,9 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryItem.classList.add('category-item');
         categoryItem.setAttribute('role','button');
         categoryItem.setAttribute('tabindex','0');
+        const businessCount = getBusinessCountForCategory(category.id);
         categoryItem.innerHTML = `
             <i class="${category.icon}"></i>
-            <span>${category.name}</span>
+            <span>${category.name} <span class="category-counter">(${businessCount})</span></span>
         `;
 
         categoryItem.addEventListener('click', () => {
@@ -98,9 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function createAllCategoriesItem() {
         const allCategoriesItem = document.createElement('div');
         allCategoriesItem.classList.add('category-item');
+        const totalBusinesses = businessData ? businessData.businesses.length : 0;
         allCategoriesItem.innerHTML = `
             <i class="fas fa-th-large"></i>
-            <span>सर्व श्रेण्या</span>
+            <span>सर्व श्रेण्या <span class="category-counter">(${totalBusinesses})</span></span>
         `;
 
         allCategoriesItem.addEventListener('click', () => {

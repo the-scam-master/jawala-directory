@@ -33,10 +33,10 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    user-select: none;          /* Standard property */
-    -webkit-user-select: none;  /* For Safari/Chrome */
-    -moz-user-select: none;     /* For Firefox */
-    -ms-user-select: none;      /* For Internet Explorer */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .container {
@@ -172,7 +172,6 @@ header::after {
     box-shadow: inset 0 0 10px var(--soft-shadow);
 }
 
-/* hidden class for temporarily hiding categories */
 .category-item.hidden {
     display: none;
 }
@@ -256,24 +255,28 @@ header::after {
 }
 
 .business-card h4 {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
     overflow: hidden;
-    line-height: 1.4;
-    max-height: 2.8em;
-    transition: max-height 0.3s ease;
-    cursor: pointer;
-    word-break: break-word;
+    text-overflow: ellipsis;
+    position: relative;
+    cursor: default;
+    margin: 0 0 8px;
+    line-height: 1.6;
+    height: 1.6em;
+    padding: 2px 40px 2px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
-.business-card h4.expanded {
-    -webkit-line-clamp: unset;
-    max-height: none;
+.business-card h4::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    background: linear-gradient(to right, transparent, var(--card-background));
+    pointer-events: none;
 }
 
 .business-card p {
@@ -335,7 +338,6 @@ header::after {
     }
 }
 
-/* Footer Styles */
 footer {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
@@ -430,40 +432,38 @@ footer .copyright {
     }
 }
 
-
 .whatsapp-contact {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px; /* Slightly larger than text size */
+    width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
     margin-left: 1px;
     transition: all 0.3s ease;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-    border: 2px solid transparent; /* Initial border for hover effect */
-    text-decoration: none; /* Remove underline */
+    border: 2px solid transparent;
+    text-decoration: none;
 }
 
 .whatsapp-contact:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque on hover */
+    background-color: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.5);
-    transform: scale(1.1); /* Slight scale effect on hover */
+    transform: scale(1.1);
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
 }
 
 .whatsapp-contact i {
-    font-size: 1.2rem; /* Slightly larger icon */
+    font-size: 1.2rem;
     transition: transform 0.3s ease;
 }
 
 .whatsapp-contact:hover i {
-    transform: scale(1.1); /* Optional: slight scale effect on hover */
+    transform: scale(1.1);
 }
 
-/* Show All Categories Button */
 .show-all-btn {
     margin-left: 10px;
     padding: 6px 14px;
@@ -480,7 +480,6 @@ footer .copyright {
     background-color: var(--secondary-color);
 }
 
-/* Loading overlay */
 .loading-overlay {
     display: none;
     align-items: center;
@@ -501,141 +500,127 @@ footer .copyright {
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* Gear button */
 .gear{position:absolute;top:12px;right:12px;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer}
 
-/* Sort select */
 .sort-container{margin-bottom:10px}
 .sort-container select{padding:6px 10px;border:1px solid var(--secondary-color);border-radius:6px;font-size:0.9rem}
 
-/* Modal */
 .modal{display:none;position:fixed;inset:0;backdrop-filter:blur(2px);align-items:center;justify-content:center;z-index:1000}
 .modal.show{display:flex}
 .modal-box{background:var(--card-background);padding:20px 30px;border-radius:12px;box-shadow:0 6px 20px var(--soft-shadow);color:var(--text-color)}
 .modal-box h3{margin-bottom:15px}
 .modal-box button{margin-top:15px;padding:6px 14px;border:none;border-radius:6px;background:var(--primary-color);color:#fff;cursor:pointer}
 
-/* Install banner */
-.install-overlay{
-    display:none;
-    position:fixed;
-    bottom:24px;
-    right:24px;
-    background:var(--primary-color);
-    color:#fff;
-    padding:16px 20px;
-    border-radius:16px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.15);
-    z-index:1000;
-    max-width:280px;
-    backdrop-filter:blur(8px);
+.install-overlay {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 280px;
+    backdrop-filter: blur(8px);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
 }
-.install-overlay.show{
-    display:flex;
-    align-items:center;
-    gap:16px;
+.install-overlay.show {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transform: translateY(0);
 }
-.install-box{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    width:100%;
+.install-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
-.install-box p{
-    margin:0;
-    font-weight:600;
-    font-size:1rem;
-    line-height:1.4;
+.install-box p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
 }
-#bannerInstallBtn{
-    background:#fff;
-    color:var(--primary-color);
-    padding:8px 16px;
-    border:none;
-    border-radius:24px;
-    font-weight:600;
-    cursor:pointer;
-    transition:transform 0.2s;
+#bannerInstallBtn {
+    background: #fff;
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
-#bannerInstallBtn:hover{
-    transform:scale(1.05);
+#bannerInstallBtn:hover {
+    transform: scale(1.05);
 }
-#dismissInstall{
-    position:absolute;
-    top:8px;
-    right:8px;
-    background:none;
-    border:none;
-    color:rgba(255,255,255,0.8);
-    font-size:18px;
-    cursor:pointer;
-    padding:4px;
-    line-height:1;
+#dismissInstall {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    line-height: 1;
 }
-#dismissInstall:hover{
-    color:#fff;
-}
-
-/* Install button */
-.install-btn{margin-top:12px;padding:8px 18px;border:none;border-radius:30px;background:var(--secondary-color);color:#fff;font-weight:600;cursor:pointer;box-shadow:0 3px 6px var(--soft-shadow);transition:background .3s}
-.install-btn:hover{background:var(--primary-color)}
-.button-group{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-.install-btn.fab{
-    width:36px;height:36px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    padding:0;
-    background:var(--secondary-color);
-    box-shadow:none;
-    transition:transform 0.2s;
-}
-.install-btn.fab i{
-    font-size:1rem;
-    color:#fff;
-}
-.install-btn.fab:hover{
-    background:var(--primary-color);
-    transform:scale(1.05);
+#dismissInstall:hover {
+    color: #fff;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
 }
 
-/* Footer spacing tweak */
-footer .footer-content{gap:8px}
+.install-btn {
+    margin-top: 12px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 30px;
+    background: var(--secondary-color);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 6px var(--soft-shadow);
+    transition: background .3s;
+}
+.install-btn:hover {
+    background: var(--primary-color);
+}
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.install-btn.fab {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    background: rgba(255,255,255,0.2);
+    box-shadow: none;
+    transition: transform 0.2s;
+    margin-top: 0;
+}
+.install-btn.fab i {
+    font-size: 1rem;
+    color: #fff;
+}
+.install-btn.fab:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
 
-/* Truncated shop title */
-.business-card h4{
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    position:relative;
-    cursor:pointer;
-    margin:0 0 8px;
-    line-height:1.6;
-    height:1.6em;
-    padding:2px 40px 2px 0;
-    font-size:1.1rem;
-    font-weight:600;
-}
-.business-card h4::after{
-    content:'';
-    position:absolute;
-    right:0;top:0;bottom:0;width:40px;
-    background:linear-gradient(to right,transparent,var(--card-background));
-    pointer-events:none;
-}
-.business-card h4.expanded{
-    white-space:normal;
-    word-wrap:break-word;
-}
-.business-card h4.expanded::after{display:none}
+footer .footer-content { gap: 8px }
 
-/* Contact row */
-.contact-row{display:flex;gap:8px;align-items:center;margin-top:8px}
-.contact-row a.tel{color:var(--secondary-color);text-decoration:none;font-weight:600}
-.contact-row a.wa{color:#25D366;font-size:1.1rem}
-.contact-row button{background:none;border:none;color:var(--primary-color);font-size:1.1rem;cursor:pointer}
+.contact-row { display: flex; gap: 8px; align-items: center; margin-top: 8px }
+.contact-row a.tel { color: var(--secondary-color); text-decoration: none; font-weight: 600 }
+.contact-row a.wa { color: #25D366; font-size: 1.1rem }
+.contact-row button { background: none; border: none; color: var(--primary-color); font-size: 1.1rem; cursor: pointer }

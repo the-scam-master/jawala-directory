@@ -7,18 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let businessData = null;
     let selectedCategory = null;
     const loadingOverlay = document.getElementById('loadingOverlay');
-    // Make business list aria-live for screen readers
+
     businessList.setAttribute('aria-live', 'polite');
-    // Sort dropdown
-    
-    // Settings modal + dark mode
+
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsModal = document.getElementById('settingsModal');
     const closeModal = document.getElementById('closeModal');
     const darkToggle = document.getElementById('darkToggle');
+
     if (settingsBtn) settingsBtn.addEventListener('click', () => settingsModal.classList.add('show'));
     if (closeModal) closeModal.addEventListener('click', () => settingsModal.classList.remove('show'));
-    // Persist dark
+
     if (localStorage.getItem('dark') === 'true') {
         document.documentElement.classList.add('dark');
         if (darkToggle) darkToggle.checked = true;
@@ -27,19 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.classList.toggle('dark', darkToggle.checked);
         localStorage.setItem('dark', darkToggle.checked);
     });
-    // Fetch business data
+
     async function fetchBusinessData() {
         loadingOverlay.classList.add('active');
         try {
             const response = await fetch('./data/businesses.json');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             businessData = await response.json();
-            // Check if categories and businesses exist
+
             if (!businessData.categories || !businessData.businesses) {
                 throw new Error("Invalid data format: Missing categories or businesses");
             }
+
             renderCategoryGrid(businessData.categories);
-            // Deep link: preselect category if ?cat= param exists
             const params = new URLSearchParams(window.location.search);
             const catParam = params.get('cat');
             if (catParam) {
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             renderBusinesses(businessData.businesses);
-            // Hide loader
             loadingOverlay.classList.remove('active');
         } catch (error) {
             console.error('Error fetching business data:', error);
@@ -61,20 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
         }
     }
-    // Render category grid
+
     function renderCategoryGrid(categories) {
         categoryGrid.innerHTML = '';
-        // Create "All Categories" item first
+
         const allCategoriesItem = createAllCategoriesItem();
         categoryGrid.appendChild(allCategoriesItem);
-        // Add unique categories
+
         const uniqueCategories = getUniqueCategories(categories);
         uniqueCategories.forEach(category => {
             const categoryItem = createCategoryItem(category);
             categoryGrid.appendChild(categoryItem);
         });
     }
-    // Create category item
+
     function createCategoryItem(category) {
         const categoryItem = document.createElement('div');
         categoryItem.classList.add('category-item');
@@ -84,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <i class="${category.icon}"></i>
             <span>${category.name}</span>
         `;
+
         categoryItem.addEventListener('click', () => {
             selectCategory(categoryItem, category);
         });
@@ -92,9 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectCategory(categoryItem, category);
             }
         });
+
         return categoryItem;
     }
-    // Create "All Categories" item
+
     function createAllCategoriesItem() {
         const allCategoriesItem = document.createElement('div');
         allCategoriesItem.classList.add('category-item');
@@ -102,12 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <i class="fas fa-th-large"></i>
             <span>सर्व श्रेण्या</span>
         `;
+
         allCategoriesItem.addEventListener('click', () => {
             selectAllCategories(allCategoriesItem);
         });
+
         return allCategoriesItem;
     }
-    // Get unique categories to avoid duplicates
+
     function getUniqueCategories(categories) {
         const seen = new Set();
         return categories.filter(category => {
@@ -118,39 +120,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         });
     }
-    // Select category
+
     function selectCategory(categoryItem, category) {
         document.querySelectorAll('.category-item').forEach(item =>
             item.classList.remove('selected')
         );
         categoryItem.classList.add('selected');
         selectedCategory = category.id;
-        // Hide other categories except "All" and selected
+
         document.querySelectorAll('.category-item').forEach((item, idx) => {
-            const isAll = idx === 0; // first item is "All"
+            const isAll = idx === 0;
             if (item !== categoryItem && !isAll) {
                 item.classList.add('hidden');
             } else {
                 item.classList.remove('hidden');
             }
         });
-        // Update label (optional)
+
         selectedCategoryName.textContent = category.name;
         selectedCategoryName.style.opacity = '1';
+
         filterBusinesses();
-        // Update URL param for deep link
         history.pushState({}, '', `?cat=${selectedCategory}`);
-        // Scroll businesses into view
         businessList.scrollIntoView({ behavior: 'smooth' });
     }
-    // Select all categories
+
     function selectAllCategories(allCategoriesItem) {
         document.querySelectorAll('.category-item').forEach(item =>
             item.classList.remove('selected')
         );
         allCategoriesItem.classList.add('selected');
         selectedCategory = null;
-        // show all category items
         document.querySelectorAll('.category-item').forEach(item => item.classList.remove('hidden'));
         selectedCategoryName.textContent = '';
         selectedCategoryName.style.opacity = '0';
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         history.pushState({}, '', location.pathname);
         loadingOverlay.classList.remove('active');
     }
-    // Filter and render businesses
+
     function filterBusinesses() {
         const searchTerm = searchInput.value.trim().toLowerCase();
         const filteredBusinesses = businessData.businesses.filter(business => {
@@ -170,47 +170,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         renderBusinesses(filteredBusinesses);
     }
-    // Render businesses
+
     function renderBusinesses(businesses) {
         businessList.innerHTML = '';
+
         if (businesses.length === 0) {
             businessList.innerHTML = '<div class="no-results"><p>कोणतेही व्यवसाय सापडले नाहीत.</p></div>';
             return;
         }
-        // If a single category is selected, show its businesses directly
+
         if (selectedCategory) {
             businesses.forEach(business => {
                 const businessCard = createBusinessCard(business);
                 businessList.appendChild(businessCard);
             });
-            // Scroll results into view for convenience
             businessList.scrollIntoView({ behavior: 'smooth' });
             return;
         }
-        // Otherwise, group businesses by category
+
         const groupedBusinesses = businesses.reduce((acc, business) => {
             if (!acc[business.category]) acc[business.category] = [];
             acc[business.category].push(business);
             return acc;
         }, {});
+
         for (const categoryId in groupedBusinesses) {
             const category = businessData.categories.find(cat => cat.id === categoryId);
             const categoryHeader = createCategoryHeader(category);
             businessList.appendChild(categoryHeader);
+
             groupedBusinesses[categoryId].forEach(business => {
                 const businessCard = createBusinessCard(business);
                 businessList.appendChild(businessCard);
             });
         }
     }
-    // Create category header
+
     function createCategoryHeader(category) {
         const categoryHeader = document.createElement('div');
         categoryHeader.classList.add('category-header');
         categoryHeader.innerHTML = `<i class="${category.icon}"></i> ${category.name}`;
         return categoryHeader;
     }
-    // Create business card
+
     function createBusinessCard(business) {
         const businessCard = document.createElement('div');
         businessCard.classList.add('business-card');
@@ -218,11 +220,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4>${business.shopName}</h4>
             <p><strong>मालक:</strong> ${business.ownerName}</p>
             <div class="contact-row">
-                <a class="tel" href="tel:${business.contactNumber}" aria-label="Call">${formatPhoneNumber(business.contactNumber)}</a>
+                <span><strong>संपर्क:</strong> <a class="tel" href="tel:${business.contactNumber}" aria-label="Call">${formatPhoneNumber(business.contactNumber)}</a></span>
                 <a class="wa" href="https://wa.me/91${business.contactNumber}?text=${encodeURIComponent('नमस्कार, मी “जवळा व्यवसाय निर्देशिका” वरून आपला संपर्क घेतला आहे.') }" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 <button class="share" aria-label="Share"><i class="fas fa-share"></i></button>
             </div>`;
-        // share handler
+
         businessCard.querySelector('.share').addEventListener('click', () => {
             const shareText = `${business.shopName}\nमालक: ${business.ownerName}\nसंपर्क: ${formatPhoneNumber(business.contactNumber)}\n\nजवळा व्यवसाय निर्देशिका – https://jawala-vyapar.vercel.app/`;
             navigator.clipboard.writeText(shareText).then(()=>{
@@ -236,32 +238,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).catch(()=>{});
             }
         });
+
         return businessCard;
     }
-    // Format phone number for better readability
+
     function formatPhoneNumber(phoneNumber) {
         if (phoneNumber.length === 10) {
             return `${phoneNumber.slice(0, 4)} ${phoneNumber.slice(4, 7)} ${phoneNumber.slice(7)}`;
         }
         return phoneNumber;
     }
-    // Handle search input
+
     searchInput.addEventListener('input', filterBusinesses);
-    // Initialize app
+
     fetchBusinessData();
-    // Register Service Worker for PWA
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js').catch(console.error);
     }
-    // Install prompt handling
+
     let deferredPrompt;
     const banner = document.getElementById('installBanner');
     const bannerBtn = document.getElementById('bannerInstallBtn');
     const footerBtn = document.getElementById('footerInstallBtn');
     const dismissBtn = document.getElementById('dismissInstall');
+
     if (bannerBtn) bannerBtn.addEventListener('click', triggerInstall);
     if (footerBtn) footerBtn.addEventListener('click', triggerInstall);
     if (dismissBtn) dismissBtn.addEventListener('click', ()=>banner.classList.remove('show'));
+
     function triggerInstall(){
         if (deferredPrompt){
             deferredPrompt.prompt();
@@ -271,24 +276,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
     window.addEventListener('beforeinstallprompt', (e)=>{
         e.preventDefault();
         deferredPrompt = e;
         banner.classList.add('show');
     });
-    // Disable certain keyboard shortcuts
+
     document.addEventListener('keydown', event => {
         const blockedKeys = ['c', 'x', 'v', 'a', 's', 'u', 'p'];
         if ((event.ctrlKey || event.metaKey) && blockedKeys.includes(event.key.toLowerCase())) {
             event.preventDefault();
         }
     });
-    // Disable right-click context menu
+
     document.addEventListener('contextmenu', event => event.preventDefault());
-    // Disable long-press context menu (for mobile)
+
     document.addEventListener('touchstart', event => {
         if (event.touches.length > 1) {
-            event.preventDefault(); // Prevent multi-touch gestures
+            event.preventDefault();
         }
     });
 });

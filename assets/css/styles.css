@@ -264,8 +264,8 @@ header::after {
     margin: 0 0 8px;
     line-height: 1.6;
     height: 1.6em;
-    padding: 2px 40px 2px 0;
-    font-size: 1.2rem; /* Increased font size */
+    padding: 2px 60px 2px 0; /* Increased padding for wider gradient */
+    font-size: 1.3rem; /* Increased font size */
     font-weight: 600;
 }
 
@@ -275,7 +275,7 @@ header::after {
     right: 0;
     top: 0;
     bottom: 0;
-    width: 40px;
+    width: 60px; /* Wider gradient for more gradual fade */
     background: linear-gradient(to right, transparent, var(--card-background));
     pointer-events: none;
 }
@@ -513,7 +513,7 @@ footer .copyright {
 .modal-box button{margin-top:15px;padding:6px 14px;border:none;border-radius:6px;background:var(--primary-color);color:#fff;cursor:pointer}
 
 .install-overlay {
-    display: none;
+    display: flex;
     position: fixed;
     bottom: 24px;
     right: 24px;
@@ -526,13 +526,14 @@ footer .copyright {
     max-width: 280px;
     backdrop-filter: blur(8px);
     transform: translateY(100%);
-    transition: transform 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 }
 .install-overlay.show {
-    display: flex;
-    align-items: center;
-    gap: 16px;
     transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
 }
 .install-box {
     display: flex;

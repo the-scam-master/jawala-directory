@@ -1,0 +1,20 @@
+{
+  "name": "जवळा गाव व्यवसाय निर्देशिका",
+  "short_name": "व्यवसाय निर्देशिका",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#F5F5F5",
+  "theme_color": "#0066FF",
+  "icons": [
+    {
+      "src": "/assets/images/telephone-directory.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/telephone-directory.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

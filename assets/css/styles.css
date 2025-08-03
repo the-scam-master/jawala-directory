@@ -125,6 +125,14 @@ header::after {
     margin: 10px 0;
     opacity: 1;
     font-weight: bold; /* Made bold */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.category-name {
+    font-weight: 600;
 }
 
 .category-item {
@@ -197,10 +205,13 @@ header::after {
 }
 
 .category-counter {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--secondary-color);
     font-weight: 400;
     margin-left: 5px;
+    padding: 2px 6px;
+    background-color: rgba(49, 48, 77, 0.1); /* Lightened secondary color for background */
+    border-radius: 10px;
 }
 
 .business-grid {

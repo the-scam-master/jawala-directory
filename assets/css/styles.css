@@ -10,16 +10,6 @@
     --soft-shadow: rgba(0,0,0,0.1);
 }
 
-:root.dark {
-    --primary-color: #58A6FF;
-    --secondary-color: #23D3BD;
-    --accent-color: #FFCC00;
-    --background-color: #0D1117;
-    --card-background: #161B22;
-    --text-color: #E6EDF3;
-    --soft-shadow: rgba(0,0,0,0.4);
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -517,17 +507,6 @@ footer .copyright {
     animation: spin 1s linear infinite;
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
-
-.gear{position:absolute;top:12px;right:12px;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer}
-
-.sort-container{margin-bottom:10px}
-.sort-container select{padding:6px 10px;border:1px solid var(--secondary-color);border-radius:6px;font-size:0.9rem}
-
-.modal{display:none;position:fixed;inset:0;backdrop-filter:blur(2px);align-items:center;justify-content:center;z-index:1000}
-.modal.show{display:flex}
-.modal-box{background:var(--card-background);padding:20px 30px;border-radius:12px;box-shadow:0 6px 20px var(--soft-shadow);color:var(--text-color)}
-.modal-box h3{margin-bottom:15px}
-.modal-box button{margin-top:15px;padding:6px 14px;border:none;border-radius:6px;background:var(--primary-color);color:#fff;cursor:pointer}
 
 .install-overlay {
     display: flex;

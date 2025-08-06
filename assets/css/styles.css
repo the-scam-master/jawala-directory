@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700&family=Mukta:wght@400;600;700&display=swap');
 
 :root {
-    --primary-color:   #006644;
-    --secondary-color: #2A9D8F;
-    --accent-color:    #E9C46A;
-    --muted-text:      #7A8D7F;
-    --background-color:#F4F9F4;
+    --primary-color:   #D1495B;
+    --secondary-color: #EDAE49;
+    --accent-color:    #3066BE;
+    --muted-text:      #8A6D5F;
+    --background-color:#FFF8E7;
     --card-background: #FFFFFF;
-    --text-color:      #002E1F;
-    --soft-shadow:     rgba(0,0,0,0.08);
+    --text-color:      #4A0F0F;
+    --soft-shadow:     rgba(0,0,0,0.07);
 }
 
 * {
@@ -623,4 +623,5 @@ footer .footer-content { gap: 8px }
 .contact-row a.tel { color: var(--secondary-color); text-decoration: none; font-weight: 600 }
 .contact-row a.wa { color: #25D366; font-size: 1.1rem }
 .contact-row button { background: none; border: none; color: var(--primary-color); font-size: 1.1rem; cursor: pointer }
+
 
